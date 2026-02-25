@@ -11,6 +11,7 @@ namespace student_management_api.Models
         public string? BookName { get; set; }
         public string? Author { get; set; }
         public int? StudentId { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public Student? Student { get; set; } //! This is called Navigation property
     }
 }

@@ -13,6 +13,7 @@ namespace student_management_api.Models
         public string? FastName { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal PendingFees { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         public List<Book>? Books { get; set; }
     }
