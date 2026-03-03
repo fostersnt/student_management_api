@@ -43,13 +43,32 @@ namespace student_management_api.Migrations.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] CreateStudentRequest studentDto)
+        public IActionResult Create([FromBody] CreateStudentRequestDto studentDto)
         {
-            var studentData  = studentDto.ToStudentFromCreateDto();
+            var studentData = studentDto.ToStudentFromCreateDto();
             _context.Students.Add(studentData);
             _context.SaveChanges();
-            return CreatedAtAction(nameof(GetById), new {id = studentData.Id}, studentData.ToStudentDto());
+            return CreatedAtAction(nameof(GetById), new { id = studentData.Id }, studentData.ToStudentDto());
             // return Ok("New student created successfully");
         }
+
+        [HttpPut("{id}")]
+        public IActionResult Update([FromRoute] int id, [FromBody] UpdateStudentRequestDto updateStudentRequestDto)
+        {
+            var student = _context.Students.FirstOrDefault(s => s.Id == id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            student.FirstName = updateStudentRequestDto.FirstName;
+            student.LastName = updateStudentRequestDto.LastName;
+            student.PendingFees = updateStudentRequestDto.PendingFees;
+
+            _context.SaveChanges();
+
+            return Ok(student.ToStudentDto());
+        }
+
     }
 }

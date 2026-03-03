@@ -22,7 +22,7 @@ namespace student_management_api.Mappers
             };
         }
 
-        public static Student ToStudentFromCreateDto(this CreateStudentRequest studentDto)
+        public static Student ToStudentFromCreateDto(this CreateStudentRequestDto studentDto)
         {
             return new Student
             {
