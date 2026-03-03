@@ -1,3 +1,4 @@
+
 using Microsoft.EntityFrameworkCore;
 using student_management_api.Models.Data;
 
@@ -12,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
 // builder.Services.AddOpenApi();
+//! Registering our dbContext class
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
