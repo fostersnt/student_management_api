@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace student_management_api.DTOs.Student
 {
-    public class StudentDto
+    public class StudentDtoGet
     {
         public int Id { get; set; }
         public string? FirstName { get; set; }

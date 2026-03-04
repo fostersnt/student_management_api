@@ -10,9 +10,9 @@ namespace student_management_api.Mappers
 {
     public static class StudentMapper
     {
-        public static StudentDto ToStudentDto(this Student studentModel)
+        public static StudentDtoGet ToStudentDto(this Student studentModel)
         {
-            return new StudentDto
+            return new StudentDtoGet
             {
                 Id = studentModel.Id,
                 FirstName = studentModel.FirstName,
@@ -22,7 +22,7 @@ namespace student_management_api.Mappers
             };
         }
 
-        public static Student ToStudentFromCreateDto(this CreateStudentRequestDto studentDto)
+        public static Student ToStudentFromCreateDto(this StudentDtoCreate studentDto)
         {
             return new Student
             {
