@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using student_management_api.Models.Data;
+using student_management_api.Repository.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//! Registering personal services
+builder.Services.MyPersonalApplicationServices();
 
 //! Register controllers
 builder.Services.AddControllers();

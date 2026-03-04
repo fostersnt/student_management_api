@@ -23,11 +23,11 @@ namespace student_management_api.Migrations.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
             // var students = _context.Students.ToList().Select(s => s.ToStudentDto());
             // return Ok(students);
-            var data = _context.Get();
+            var data = await _context.Get();
             return Ok(data);
         }
 
