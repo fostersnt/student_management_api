@@ -16,23 +16,23 @@ namespace student_management_api.Migrations.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
-        private readonly IApiService<StudentDtoGet, StudentDtoCreate, StudentDtoUpdate> _context;
+        private readonly IApiService<StudentDtoGet, StudentDtoCreate, StudentDtoUpdate> _apiService;
         public StudentController(IApiService<StudentDtoGet, StudentDtoCreate, StudentDtoUpdate> context)
         {
-            _context = context;
+            _apiService = context;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var data = await _context.Get();
+            var data = await _apiService.Get();
             return Ok(data);
         }
 
-        [HttpGet("{Id}")]
-        public async Task<IActionResult> GetById([FromRoute] int Id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            var student = await _context.Get(Id);
+            var student = await _apiService.Get(id);
             if (student != null)
             {
                 return Ok(student);
@@ -45,29 +45,24 @@ namespace student_management_api.Migrations.Controllers
         // public IActionResult Create([FromBody] StudentDtoCreate studentDto)
         // {
         //     var studentData = studentDto.ToStudentFromCreateDto();
-        //     _context.Students.Add(studentData);
-        //     _context.SaveChanges();
+        //     _apiService.Students.Add(studentData);
+        //     _apiService.SaveChanges();
         //     return CreatedAtAction(nameof(GetById), new { id = studentData.Id }, studentData.ToStudentDto());
         //     // return Ok("New student created successfully");
         // }
 
-        // [HttpPut("{id}")]
-        // public IActionResult Update([FromRoute] int id, [FromBody] StudentDtoUpdate updateStudentRequestDto)
-        // {
-        //     var student = _context.Students.FirstOrDefault(s => s.Id == id);
-        //     if (student == null)
-        //     {
-        //         return NotFound();
-        //     }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] StudentDtoUpdate updateStudentRequestDto)
+        {
+            var student = await _apiService.Update(id, updateStudentRequestDto);
 
-        //     student.FirstName = updateStudentRequestDto.FirstName;
-        //     student.LastName = updateStudentRequestDto.LastName;
-        //     student.PendingFees = updateStudentRequestDto.PendingFees;
+            if (student != null)
+            {
+                return Ok(student);
+            }
 
-        //     _context.SaveChanges();
-
-        //     return Ok(student.ToStudentDto());
-        // }
+            return NotFound();
+        }
 
     }
 }

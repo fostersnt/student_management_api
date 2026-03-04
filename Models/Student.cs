@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace student_management_api.Models
     public class Student
     {
         public int Id { get; set; }
+        
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         [Column(TypeName = "decimal(18,2)")]

@@ -9,7 +9,7 @@ namespace student_management_api.Repository.IService
     {
         public Task<TDtoGet> Get(int Id);
         public Task<IEnumerable<TDtoGet>> Get();
-        public Task<TDtoCreate> Create(TDtoCreate data);
-        public Task<TDtoUpdate> Update(int Id, TDtoUpdate data);
+        public Task<TDtoGet> Create(TDtoCreate data);
+        public Task<TDtoGet> Update(int Id, TDtoUpdate data);
     }
 }

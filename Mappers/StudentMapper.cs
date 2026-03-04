@@ -31,5 +31,15 @@ namespace student_management_api.Mappers
                 PendingFees = studentDto.PendingFees
             };
         }
+
+        public static Student ToStudentFromUpdateDto(this StudentDtoUpdate studentDto)
+        {
+            return new Student
+            {
+                FirstName = studentDto.FirstName,
+                LastName = studentDto.LastName,
+                PendingFees = studentDto.PendingFees
+            };
+        }
     }
 }
