@@ -20,9 +20,14 @@ namespace student_management_api.Repository.Service
             _context = applicationDbContext;
         }
 
-        public async Task<StudentDtoGet> Create(StudentDtoCreate data)
+        public async Task<StudentDtoGet> Create(StudentDtoCreate studentDtoCreate)
         {
-            throw new NotImplementedException();
+            var studentEntity = studentDtoCreate.ToStudentFromCreateDto();
+            var entityEntry = await _context.Students.AddAsync(studentEntity);
+
+            await _context.SaveChangesAsync();
+
+            return entityEntry.Entity.ToStudentDto();
         }
 
         public async Task<StudentDtoGet> Get(int Id)
@@ -57,9 +62,9 @@ namespace student_management_api.Repository.Service
                 student.LastName = studentDtoUpdate.LastName;
                 student.PendingFees = studentDtoUpdate.PendingFees;
 
-               await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
-               return student.ToStudentDto();
+                return student.ToStudentDto();
             }
 
             return null;

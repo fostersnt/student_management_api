@@ -41,15 +41,14 @@ namespace student_management_api.Migrations.Controllers
             return NotFound("Student not found");
         }
 
-        // [HttpPost]
-        // public IActionResult Create([FromBody] StudentDtoCreate studentDto)
-        // {
-        //     var studentData = studentDto.ToStudentFromCreateDto();
-        //     _apiService.Students.Add(studentData);
-        //     _apiService.SaveChanges();
-        //     return CreatedAtAction(nameof(GetById), new { id = studentData.Id }, studentData.ToStudentDto());
-        //     // return Ok("New student created successfully");
-        // }
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] StudentDtoCreate studentDto)
+        {
+            // var studentData = studentDto.ToStudentFromCreateDto();
+           var result = await _apiService.Create(studentDto);
+            // return CreatedAtAction(nameof(GetById), new { id = studentData.Id }, studentData.ToStudentDto());
+            return Ok(result);
+        }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] StudentDtoUpdate updateStudentRequestDto)
