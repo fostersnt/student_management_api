@@ -47,15 +47,15 @@ namespace student_management_api.Repository.Service
             return null;
         }
 
-        public async Task<StudentDtoGet> Update(int Id, StudentDtoUpdate data)
+        public async Task<StudentDtoGet> Update(int Id, StudentDtoUpdate studentDtoUpdate)
         {
             var student = await _context.Students.FindAsync(Id);
 
             if (student != null)
             {
-                student.FirstName = data.FirstName;
-                student.LastName = data.LastName;
-                student.PendingFees = data.PendingFees;
+                student.FirstName = studentDtoUpdate.FirstName;
+                student.LastName = studentDtoUpdate.LastName;
+                student.PendingFees = studentDtoUpdate.PendingFees;
 
                await _context.SaveChangesAsync();
 
