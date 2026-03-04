@@ -25,25 +25,21 @@ namespace student_management_api.Migrations.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            // var students = _context.Students.ToList().Select(s => s.ToStudentDto());
-            // return Ok(students);
             var data = await _context.Get();
             return Ok(data);
         }
 
-        // [HttpGet("{id}")]
-        // public IActionResult GetById([FromRoute] int id)
-        // {
-        //     var student = _context.Students.Find(id)?.ToStudentDto();
-        //     if (student == null)
-        //     {
-        //         return NotFound("Student not found");
-        //     }
-        //     else
-        //     {
-        //         return Ok(student);
-        //     }
-        // }
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetById([FromRoute] int Id)
+        {
+            var student = await _context.Get(Id);
+            if (student != null)
+            {
+                return Ok(student);
+            }
+
+            return NotFound("Student not found");
+        }
 
         // [HttpPost]
         // public IActionResult Create([FromBody] StudentDtoCreate studentDto)

@@ -27,7 +27,13 @@ namespace student_management_api.Repository.Service
 
         public async Task<StudentDtoGet> Get(int Id)
         {
-            throw new NotImplementedException();
+            var student = await _context.Students.FindAsync(Id);
+            if (student != null)
+            {
+                return student.ToStudentDto();
+            }
+
+            return null;
         }
 
         public async Task<IEnumerable<StudentDtoGet>> Get()
@@ -38,7 +44,7 @@ namespace student_management_api.Repository.Service
                 return students.Select(student => student.ToStudentDto());
             }
 
-            return [];
+            return null;
         }
 
         public async Task<StudentDtoUpdate> Update(int Id, StudentDtoUpdate data)
