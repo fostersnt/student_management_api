@@ -24,9 +24,32 @@ namespace student_management_api.Repository.Service
             _context = applicationDbContext;
         }
 
-        public Task<ApiResponse<BookDtoGet>> Create(BookDtoCreate data)
+        public async Task<ApiResponse<BookDtoGet>> Create(BookDtoCreate bookDtoCreate)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var TransformedBookDto = bookDtoCreate.From_BookDto_To_Book();
+                var book = await _context.Books.AddAsync(TransformedBookDto);
+                int addedCount = await _context.SaveChangesAsync();
+
+                if (addedCount == 1)
+                {
+                    message = "Book created successfully";
+                }
+                else
+                {
+                    message = "Failed to create new book";
+                }
+
+                status = true;
+                return new ApiResponse<BookDtoGet>(status, message, book.Entity.From_Book_To_BookDtoGet());
+            }
+            catch (Exception ex)
+            {
+                status = false;
+                message = ex.Message.ToString();
+                return new ApiResponse<BookDtoGet>(status, message, null);
+            }
         }
 
         public ApiResponse<object> Delete(int Id)

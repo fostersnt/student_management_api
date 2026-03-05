@@ -24,7 +24,6 @@ namespace student_management_api.Controllers
         public async Task<IActionResult> Get()
         {
             var response = await _apiService.Get();
-
             return response.Status == true ? Ok(response) : BadRequest(response);
 
         }
