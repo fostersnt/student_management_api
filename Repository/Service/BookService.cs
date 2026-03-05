@@ -36,18 +36,28 @@ namespace student_management_api.Repository.Service
 
         public async Task<ApiResponse<BookDtoGet>> Get(int Id)
         {
-            var book = await _context.Books.FindAsync(Id);
-            var TransformedBook = book.From_Book_To_BookDtoGet();
+            try
+            {
+                var book = await _context.Books.FindAsync(Id);
+                var TransformedBook = book.From_Book_To_BookDtoGet();
 
-            if (book == null)
-            {
-                message = "Not found";
+                if (book == null)
+                {
+                    message = "Not found";
+                }
+                else
+                {
+                    message = "Book found";
+                }
+                status = true;
+                return new ApiResponse<BookDtoGet>(status, message, TransformedBook);
             }
-            else
+            catch (Exception ex)
             {
-                message = "Book found";
+                status = false;
+                message = ex.Message.ToString();
+                return new ApiResponse<BookDtoGet>(status, message, null);
             }
-            return new ApiResponse<BookDtoGet>(true, message, TransformedBook);
         }
 
         public async Task<ApiResponse<IEnumerable<BookDtoGet>>> Get()
@@ -55,9 +65,6 @@ namespace student_management_api.Repository.Service
             try
             {
                 var books = await _context.Books.ToListAsync();
-                var dtc = new List<int>{2, 4, 6};
-
-                int a = dtc[10];
 
                 var TransformedBooks = books?.Select(book => book.From_Book_To_BookDtoGet());
 
