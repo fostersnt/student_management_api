@@ -23,11 +23,19 @@ namespace student_management_api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+            string message = "";
+
             var books = await _apiService.Get();
-            if (books.IsNullOrEmpty())
+
+            if (books != null)
             {
-                return Ok(new ApiResponse<BookDtoGet>(true, "No book found", null));
+                message = "Books found";
             }
+            else
+            {
+                message = "No book found";
+            }
+            return Ok(new ApiResponse<IEnumerable<BookDtoGet>>(true, message, books));
         }
     }
 }
