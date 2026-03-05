@@ -48,5 +48,12 @@ namespace student_management_api.Controllers
             var response = await _apiService.Update(id, bookDtoUpdate);
             return response.Status == true ? Ok(response) : BadRequest(response);
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete([FromRoute] int id)
+        {
+            var response = _apiService.Delete(id);
+            return response.Status == true ? Ok(response) : BadRequest(response);
+        }
     }
 }

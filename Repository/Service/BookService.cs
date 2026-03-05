@@ -82,6 +82,8 @@ namespace student_management_api.Repository.Service
             catch (Exception ex)
             {
                 _logger.LogInformation("BOOK_DELETION === Message [" + ex.Message + "]");
+                message = "An error occurred when deleting book";
+                return new ApiResponse<BookDtoGet>(status, message, null);
             }
         }
 
@@ -90,7 +92,7 @@ namespace student_management_api.Repository.Service
             try
             {
                 var book = await _context.Books.FindAsync(Id);
-                var TransformedBook = book.From_Book_To_BookDtoGet();
+                var TransformedBook = book?.From_Book_To_BookDtoGet();
 
                 if (book == null)
                 {
