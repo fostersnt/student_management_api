@@ -23,19 +23,17 @@ namespace student_management_api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            string message = "";
+            var response = await _apiService.Get();
 
-            var books = await _apiService.Get();
+            return Ok(response);
 
-            if (books != null)
-            {
-                message = "Books found";
-            }
-            else
-            {
-                message = "No book found";
-            }
-            return Ok(new ApiResponse<IEnumerable<BookDtoGet>>(true, message, books));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get([FromRoute] int id)
+        {
+            var response = await _apiService.Get(id);
+            return Ok(response.Status);
         }
     }
 }

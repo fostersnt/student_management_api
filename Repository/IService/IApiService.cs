@@ -2,15 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using student_management_api.Models;
 
 namespace student_management_api.Repository.IService
 {
     public interface IApiService<TDtoGet, TDtoCreate, TDtoUpdate>
     {
-        public Task<TDtoGet> Get(int Id);
-        public Task<IEnumerable<TDtoGet>> Get();
-        public Task<TDtoGet> Create(TDtoCreate data);
-        public Task<TDtoGet> Update(int Id, TDtoUpdate data);
-        public bool Delete(int Id);
+        public Task<ApiResponse<TDtoGet>> Get(int Id);
+        public Task<ApiResponse<IEnumerable<TDtoGet>>> Get();
+        public Task<ApiResponse<TDtoGet>> Create(TDtoCreate data);
+        public Task<ApiResponse<TDtoGet>> Update(int Id, TDtoUpdate data);
+        public ApiResponse<Object> Delete(int Id);
     }
 }

@@ -29,7 +29,7 @@ namespace student_management_api.Migrations.Controllers
 
             if (students != null)
             {
-                return Ok(new ApiResponse<IEnumerable<StudentDtoGet>>(true, "Students found", students));
+                return Ok(new ApiResponse<IEnumerable<StudentDtoGet>>(true, "Students found", null));
             }
 
             return NotFound(new ApiResponse<IEnumerable<StudentDtoGet>>(false, "No student found", null));
@@ -41,7 +41,7 @@ namespace student_management_api.Migrations.Controllers
             var student = await _apiService.Get(id);
             if (student != null)
             {
-                return Ok(new ApiResponse<StudentDtoGet>(true, "Student found", student));
+                return Ok(new ApiResponse<StudentDtoGet>(true, "Student found", null));
             }
 
             return NotFound(new ApiResponse<StudentDtoGet>(false, "Student not found", null));
@@ -58,7 +58,7 @@ namespace student_management_api.Migrations.Controllers
                 return Ok(new ApiResponse<StudentDtoGet>(
                 true,
                 "Student created successfully",
-                result
+                null
             ));
             }
 
@@ -76,22 +76,22 @@ namespace student_management_api.Migrations.Controllers
 
             if (student != null)
             {
-                return Ok(new ApiResponse<StudentDtoGet>(true, "Student updated successfully", student));
+                return Ok(new ApiResponse<StudentDtoGet>(true, "Student updated successfully", null));
             }
 
             return NotFound(new ApiResponse<StudentDtoGet>(true, "Student not found", null));
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
-        {
-            bool deleteResult = _apiService.Delete(id);
-            if (deleteResult)
-            {
-                return Ok(new ApiResponse<StudentDtoGet>(true, "Student deleted successfully", null));
-            }
-                return BadRequest(new ApiResponse<StudentDtoGet>(false, "Unable to delete student", null));
-        }
+        // [HttpDelete("{id}")]
+        // public async Task<IActionResult> Delete([FromRoute] int id)
+        // {
+        //     bool deleteResult = _apiService.Delete(id);
+        //     if (deleteResult)
+        //     {
+        //         return Ok(new ApiResponse<StudentDtoGet>(true, "Student deleted successfully", null));
+        //     }
+        //         return BadRequest(new ApiResponse<StudentDtoGet>(false, "Unable to delete student", null));
+        // }
 
     }
 }
