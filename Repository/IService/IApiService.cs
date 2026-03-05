@@ -12,6 +12,6 @@ namespace student_management_api.Repository.IService
         public Task<ApiResponse<IEnumerable<TDtoGet>>> Get();
         public Task<ApiResponse<TDtoGet>> Create(TDtoCreate data);
         public Task<ApiResponse<TDtoGet>> Update(int Id, TDtoUpdate data);
-        public ApiResponse<Object> Delete(int Id);
+        public ApiResponse<TDtoGet> Delete(int Id);
     }
 }

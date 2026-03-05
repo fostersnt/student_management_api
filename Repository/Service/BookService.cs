@@ -59,9 +59,30 @@ namespace student_management_api.Repository.Service
             }
         }
 
-        public ApiResponse<object> Delete(int Id)
+        public ApiResponse<BookDtoGet> Delete(int Id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _logger.LogInformation("BOOK_CREATION === Incoming Book Id: " + Id);
+
+                var book = _context.Books.Find(Id);
+
+                if (book != null)
+                {
+                    _context.Books.Remove(book);
+                    status = true;
+                    message = "Book deleted successfully";
+                }else
+                {
+                    message = "Unable to delete this book";
+                }
+
+                return new ApiResponse<BookDtoGet>(status, message, null);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation("BOOK_DELETION === Message [" + ex.Message + "]");
+            }
         }
 
         public async Task<ApiResponse<BookDtoGet>> Get(int Id)

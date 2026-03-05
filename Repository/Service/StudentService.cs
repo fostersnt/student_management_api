@@ -25,7 +25,7 @@ namespace student_management_api.Repository.Service
             throw new NotImplementedException();
         }
 
-        public ApiResponse<object> Delete(int Id)
+        public ApiResponse<StudentDtoGet> Delete(int Id)
         {
             throw new NotImplementedException();
         }
