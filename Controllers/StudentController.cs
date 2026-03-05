@@ -45,9 +45,22 @@ namespace student_management_api.Migrations.Controllers
         public async Task<IActionResult> Create([FromBody] StudentDtoCreate studentDto)
         {
             // var studentData = studentDto.ToStudentFromCreateDto();
-           var result = await _apiService.Create(studentDto);
+            var result = await _apiService.Create(studentDto);
             // return CreatedAtAction(nameof(GetById), new { id = studentData.Id }, studentData.ToStudentDto());
-            return Ok(result);
+            if (result == null)
+            {
+                return BadRequest(new ApiResponse<object>(
+                    false,
+                    "Student could not be created",
+                    null
+                ));
+            }
+
+            return Ok(new ApiResponse<StudentDtoGet>(
+                true,
+                "Student created successfully",
+                result
+            ));
         }
 
         [HttpPut("{id}")]
