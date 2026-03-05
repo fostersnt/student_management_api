@@ -47,19 +47,19 @@ namespace student_management_api.Migrations.Controllers
             // var studentData = studentDto.ToStudentFromCreateDto();
             var result = await _apiService.Create(studentDto);
             // return CreatedAtAction(nameof(GetById), new { id = studentData.Id }, studentData.ToStudentDto());
-            if (result == null)
+            if (result != null)
             {
-                return BadRequest(new ApiResponse<object>(
-                    false,
-                    "Student could not be created",
-                    null
-                ));
-            }
-
-            return Ok(new ApiResponse<StudentDtoGet>(
+                return Ok(new ApiResponse<StudentDtoGet>(
                 true,
                 "Student created successfully",
                 result
+            ));
+            }
+
+            return BadRequest(new ApiResponse<object>(
+                false,
+                "Student could not be created",
+                null
             ));
         }
 
