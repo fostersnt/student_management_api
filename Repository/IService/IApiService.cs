@@ -11,5 +11,6 @@ namespace student_management_api.Repository.IService
         public Task<IEnumerable<TDtoGet>> Get();
         public Task<TDtoGet> Create(TDtoCreate data);
         public Task<TDtoGet> Update(int Id, TDtoUpdate data);
+        public bool Delete(int Id);
     }
 }

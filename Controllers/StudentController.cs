@@ -82,5 +82,16 @@ namespace student_management_api.Migrations.Controllers
             return NotFound(new ApiResponse<StudentDtoGet>(true, "Student not found", null));
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            bool deleteResult = _apiService.Delete(id);
+            if (deleteResult)
+            {
+                return Ok(new ApiResponse<StudentDtoGet>(true, "Student deleted successfully", null));
+            }
+                return BadRequest(new ApiResponse<StudentDtoGet>(false, "Unable to delete student", null));
+        }
+
     }
 }

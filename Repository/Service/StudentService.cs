@@ -30,6 +30,18 @@ namespace student_management_api.Repository.Service
             return entityEntry.Entity.ToStudentDto();
         }
 
+        public bool Delete(int Id)
+        {
+            var student = _context.Students.Find(Id);
+            if (student != null)
+            {
+                _context.Students.Remove(student);
+                return true;
+            }
+
+            return false;
+        }
+
         public async Task<StudentDtoGet> Get(int Id)
         {
             var student = await _context.Students.FindAsync(Id);
