@@ -18,7 +18,7 @@ namespace student_management_api.Mappers
                 StudentId = book.StudentId
             };
         }
-        public static Book From_BookDto_To_Book (this BookDtoCreate bookDtoCreate)
+        public static Book From_BookDtoCreate_To_Book (this BookDtoCreate bookDtoCreate)
         {
             return new Book
             {
@@ -26,6 +26,11 @@ namespace student_management_api.Mappers
                 Author = bookDtoCreate.Author,
                 StudentId = bookDtoCreate.StudentId
             };
+        }
+
+        public static Book From_BookDtoUpdate_To_Book(this BookDtoUpdate bookDtoUpdate)
+        {
+            
         }
     }
 }

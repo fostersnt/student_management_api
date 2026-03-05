@@ -28,7 +28,7 @@ namespace student_management_api.Repository.Service
         {
             try
             {
-                var TransformedBookDto = bookDtoCreate.From_BookDto_To_Book();
+                var TransformedBookDto = bookDtoCreate.From_BookDtoCreate_To_Book();
                 var book = await _context.Books.AddAsync(TransformedBookDto);
                 int addedCount = await _context.SaveChangesAsync();
 
@@ -112,9 +112,30 @@ namespace student_management_api.Repository.Service
             }
         }
 
-        public Task<ApiResponse<BookDtoGet>> Update(int Id, BookDtoUpdate data)
+        public async Task<ApiResponse<BookDtoGet>> Update(int Id, BookDtoUpdate bookDtoUpdate)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var TransformedBook = bookDtoUpdate.From_BookDtoUpdate_To_Book();
+                var book = await _context.Books.AddAsync(TransformedBook);
+                int addedCount = await _context.SaveChangesAsync();
+                if (addedCount == 1)
+                {
+                    message = "Book updated successfully";
+                }
+                else
+                {
+                    message = "Failed to update book";
+                }
+                status = true;
+                return new ApiResponse<BookDtoGet>(status, message, book.Entity.From_Book_To_BookDtoGet());
+            }
+            catch (Exception ex)
+            {
+                status = false;
+                message = ex.Message.ToString();
+                return new ApiResponse<BookDtoGet>(status, message, null);
+            }
         }
     }
 }
