@@ -70,10 +70,10 @@ namespace student_management_api.Migrations.Controllers
 
             if (student != null)
             {
-                return Ok(student);
+                return Ok(new ApiResponse<StudentDtoGet>(true, "Student updated successfully", student));
             }
 
-            return NotFound();
+            return NotFound(new ApiResponse<StudentDtoGet>(true, "Student not found", null));
         }
 
     }
