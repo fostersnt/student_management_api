@@ -25,8 +25,14 @@ namespace student_management_api.Migrations.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var data = await _apiService.Get();
-            return Ok(data);
+            var students = await _apiService.Get();
+
+            if (students != null)
+            {
+                return Ok(new ApiResponse<IEnumerable<StudentDtoGet>>(true, "Students found", students));
+            }
+
+            return NotFound(new ApiResponse<IEnumerable<StudentDtoGet>>(false, "No student found", null));
         }
 
         [HttpGet("{id}")]
@@ -35,10 +41,10 @@ namespace student_management_api.Migrations.Controllers
             var student = await _apiService.Get(id);
             if (student != null)
             {
-                return Ok(student);
+                return Ok(new ApiResponse<StudentDtoGet>(true, "Student found", student));
             }
 
-            return NotFound("Student not found");
+            return NotFound(new ApiResponse<StudentDtoGet>(false, "Student not found", null));
         }
 
         [HttpPost]
