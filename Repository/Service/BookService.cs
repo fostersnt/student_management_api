@@ -17,19 +17,23 @@ namespace student_management_api.Repository.Service
     {
         public string message { get; set; } = "";
         public bool status { get; set; } = false;
-        private readonly ApplicationDbContext _context;
 
-        public BookService(ApplicationDbContext applicationDbContext)
+        private readonly ApplicationDbContext _context;
+        private readonly ILogger<BookService> _logger;
+
+        public BookService(ApplicationDbContext applicationDbContext, ILogger<BookService> logger)
         {
             _context = applicationDbContext;
+            _logger = logger;
         }
 
         public async Task<ApiResponse<BookDtoGet>> Create(BookDtoCreate bookDtoCreate)
         {
             try
             {
+                _logger.LogInformation("This is books data");
                 var TransformedBookDto = bookDtoCreate.From_BookDtoCreate_To_Book();
-                var book = await _context.Books.AddAsync(TransformedBookDto);
+                await _context.Books.AddAsync(TransformedBookDto);
                 int addedCount = await _context.SaveChangesAsync();
 
                 if (addedCount == 1)
@@ -42,12 +46,14 @@ namespace student_management_api.Repository.Service
                 }
 
                 status = true;
-                return new ApiResponse<BookDtoGet>(status, message, book.Entity.From_Book_To_BookDtoGet());
+                return new ApiResponse<BookDtoGet>(status, message, TransformedBookDto.From_Book_To_BookDtoGet());
             }
             catch (Exception ex)
             {
+                string logMessage = ex.InnerException?.Message ?? ex.Message;
+                _logger.LogInformation("BOOK CREATION === " + logMessage);
                 status = false;
-                message = ex.Message.ToString();
+                message = "Sorry, failed to create new book";
                 return new ApiResponse<BookDtoGet>(status, message, null);
             }
         }

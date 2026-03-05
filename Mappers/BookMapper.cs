@@ -30,7 +30,12 @@ namespace student_management_api.Mappers
 
         public static Book From_BookDtoUpdate_To_Book(this BookDtoUpdate bookDtoUpdate)
         {
-            
+            return new Book
+            {
+              BookName = bookDtoUpdate.BookName,
+              Author = bookDtoUpdate.Author,
+              StudentId = bookDtoUpdate.StudentId
+            };
         }
     }
 }

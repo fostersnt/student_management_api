@@ -1,5 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using student_management_api.Models.Data;
 using student_management_api.Repository.Service;
 
@@ -15,6 +16,13 @@ builder.Services.MyPersonalApplicationServices();
 
 //! Register controllers
 builder.Services.AddControllers();
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 // builder.Services.AddOpenApi();
 //! Registering our dbContext class
