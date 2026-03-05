@@ -12,6 +12,6 @@ namespace student_management_api.DTOs.Student
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public decimal PendingFees { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public string CreatedAt { get; set; } = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
     }
 }

@@ -18,7 +18,7 @@ namespace student_management_api.Mappers
                 FirstName = studentModel.FirstName,
                 LastName = studentModel.LastName,
                 PendingFees = studentModel.PendingFees,
-                CreatedAt = studentModel.CreatedAt
+                CreatedAt = studentModel.CreatedAt.ToString("yyyy-MM-ddTHH:mm:ss")
             };
         }
 
