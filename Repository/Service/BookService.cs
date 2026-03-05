@@ -31,7 +31,7 @@ namespace student_management_api.Repository.Service
         {
             try
             {
-                _logger.LogInformation("This is books data");
+                _logger.LogInformation("BOOK CREATION === Incoming Data {@book}", bookDtoCreate);
                 var TransformedBookDto = bookDtoCreate.From_BookDtoCreate_To_Book();
                 await _context.Books.AddAsync(TransformedBookDto);
                 int addedCount = await _context.SaveChangesAsync();
@@ -51,9 +51,10 @@ namespace student_management_api.Repository.Service
             catch (Exception ex)
             {
                 string logMessage = ex.InnerException?.Message ?? ex.Message;
-                _logger.LogInformation("BOOK CREATION === " + logMessage);
+                _logger.LogInformation("BOOK CREATION === Message [" + logMessage + "]");
                 status = false;
                 message = "Sorry, failed to create new book";
+                _logger.LogInformation("");
                 return new ApiResponse<BookDtoGet>(status, message, null);
             }
         }
