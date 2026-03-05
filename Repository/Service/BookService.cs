@@ -15,8 +15,8 @@ namespace student_management_api.Repository.Service
 {
     public class BookService : IApiService<BookDtoGet, BookDtoCreate, BookDtoUpdate>
     {
-        public string message { get; set; }
-        public bool status { get; set; }
+        public string message { get; set; } = "";
+        public bool status { get; set; } = false;
         private readonly ApplicationDbContext _context;
 
         public BookService(ApplicationDbContext applicationDbContext)
