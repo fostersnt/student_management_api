@@ -11,6 +11,6 @@ namespace student_management_api.DTOs.Book
         public string? BookName { get; set; }
         public string? Author { get; set; }
         public int? StudentId { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public string CreatedAt { get; set; } = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
     }
 }
