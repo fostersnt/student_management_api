@@ -25,7 +25,7 @@ namespace student_management_api.Controllers
         {
             var response = await _apiService.Get();
 
-            return Ok(response);
+            return response.Status == true ? Ok(response) : BadRequest(response);
 
         }
 
@@ -33,7 +33,7 @@ namespace student_management_api.Controllers
         public async Task<IActionResult> Get([FromRoute] int id)
         {
             var response = await _apiService.Get(id);
-            return Ok(response.Status);
+            return response.Status == true ? Ok(response) : BadRequest(response);
         }
     }
 }
