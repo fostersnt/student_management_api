@@ -121,7 +121,7 @@ namespace student_management_api.Repository.Service
 
                 var TransformedBooks = books?.Select(book => book.From_Book_To_BookDtoGet());
 
-                if (books.IsNullOrEmpty())
+                if (books == null || books.Count == 0)
                 {
                     message = "No books found";
                 }

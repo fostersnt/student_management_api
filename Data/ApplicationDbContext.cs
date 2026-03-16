@@ -32,13 +32,13 @@ namespace student_management_api.Models.Data
             builder.Entity<Role>().HasData(
         new Role
         {
-            // Id = 1,
+            Id = 1,
             Name = "Admin",
             NormalizedName = "ADMIN"
         },
         new Role
         {
-            // Id = 2,
+            Id = 2,
             Name = "User",
             NormalizedName = "USER"
         }
