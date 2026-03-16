@@ -132,7 +132,7 @@ namespace student_management_api.Repository.Service
 
                 status = true;
 
-                return new ApiResponse<IEnumerable<BookDtoGet>>(true, message, TransformedBooks);
+                return new ApiResponse<IEnumerable<BookDtoGet>>(status, message, TransformedBooks);
             }
             catch (Exception ex)
             {

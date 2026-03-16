@@ -48,6 +48,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 //! This is needed for Swagger to work with our created controllers
 app.MapControllers();
 

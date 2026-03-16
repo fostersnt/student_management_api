@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using student_management_api.DTOs.Student;
 using student_management_api.Mappers;
@@ -22,6 +23,7 @@ namespace student_management_api.Migrations.Controllers
             _apiService = context;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

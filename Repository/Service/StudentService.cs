@@ -13,11 +13,15 @@ namespace student_management_api.Repository.Service
 {
     public class StudentService : IApiService<StudentDtoGet, StudentDtoCreate, StudentDtoUpdate>
     {
+        public string message { get; set; } = "";
+        public bool status { get; set; } = false;
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<BookService> _logger;
 
-        public StudentService(ApplicationDbContext applicationDbContext)
+        public StudentService(ApplicationDbContext applicationDbContext, ILogger<BookService> logger)
         {
             _context = applicationDbContext;
+            _logger = logger;
         }
 
         public Task<ApiResponse<StudentDtoGet>> Create(StudentDtoCreate data)
@@ -35,9 +39,22 @@ namespace student_management_api.Repository.Service
             throw new NotImplementedException();
         }
 
-        public Task<ApiResponse<IEnumerable<StudentDtoGet>>> Get()
+        public async Task<ApiResponse<IEnumerable<StudentDtoGet>>> Get()
         {
-            throw new NotImplementedException();
+            var students = await _context.Students.ToListAsync();
+            IEnumerable<StudentDtoGet> formattedStudents = null;
+            if (students != null)
+            {
+                formattedStudents = students.Select(student => student.ToStudentDto());
+                message = "Students found";
+                status = true;
+            }
+            else
+            {
+                message = "No Student Found";
+            }
+
+            return new ApiResponse<IEnumerable<StudentDtoGet>>(status, message, formattedStudents);
         }
 
         public Task<ApiResponse<StudentDtoGet>> Update(int Id, StudentDtoUpdate data)
