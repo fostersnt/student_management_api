@@ -16,9 +16,9 @@ namespace student_management_api.Repository.Service
         public string message { get; set; } = "";
         public bool status { get; set; } = false;
         private readonly ApplicationDbContext _context;
-        private readonly ILogger<BookService> _logger;
+        private readonly ILogger<StudentService> _logger;
 
-        public StudentService(ApplicationDbContext applicationDbContext, ILogger<BookService> logger)
+        public StudentService(ApplicationDbContext applicationDbContext, ILogger<StudentService> logger)
         {
             _context = applicationDbContext;
             _logger = logger;
@@ -28,29 +28,29 @@ namespace student_management_api.Repository.Service
         {
             try
             {
-                _logger.LogInformation("BOOK_CREATION === Incoming Data {@book}", studentDtoCreate);
-                var TransformedBookDto = studentDtoCreate.ToStudentFromCreateDto();
-                await _context.Students.AddAsync(TransformedBookDto);
+                _logger.LogInformation("STUDENT_CREATION === Incoming Data {@student}", studentDtoCreate);
+                var TransformedStudentDto = studentDtoCreate.ToStudentFromCreateDto();
+                await _context.Students.AddAsync(TransformedStudentDto);
                 int addedCount = await _context.SaveChangesAsync();
 
                 if (addedCount == 1)
                 {
-                    message = "Book created successfully";
+                    message = "Student created successfully";
                 }
                 else
                 {
-                    message = "Failed to create new book";
+                    message = "Failed to create new student";
                 }
 
                 status = true;
-                return new ApiResponse<StudentDtoGet>(status, message, TransformedBookDto.ToStudentDto());
+                return new ApiResponse<StudentDtoGet>(status, message, TransformedStudentDto.ToStudentDto());
             }
             catch (Exception ex)
             {
                 string logMessage = ex.InnerException?.Message ?? ex.Message;
-                _logger.LogInformation("BOOK_CREATION_TRY_CATCH === Message [" + logMessage + "]");
+                _logger.LogInformation("STUDENT_CREATION_TRY_CATCH === Message [" + logMessage + "]");
                 status = false;
-                message = "Sorry, failed to create new book";
+                message = "Sorry, failed to create new student";
                 _logger.LogInformation("");
                 return new ApiResponse<StudentDtoGet>(status, message, null);
             }

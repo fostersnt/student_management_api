@@ -23,8 +23,8 @@ namespace student_management_api.Migrations.Controllers
             _apiService = context;
         }
 
-        // [Authorize]
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             var response = await _apiService.Get();
@@ -46,23 +46,8 @@ namespace student_management_api.Migrations.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] StudentDtoCreate studentDto)
         {
-            // var studentData = studentDto.ToStudentFromCreateDto();
-            var result = await _apiService.Create(studentDto);
-            // return CreatedAtAction(nameof(GetById), new { id = studentData.Id }, studentData.ToStudentDto());
-            if (result != null)
-            {
-                return Ok(new ApiResponse<StudentDtoGet>(
-                true,
-                "Student created successfully",
-                null
-            ));
-            }
-
-            return BadRequest(new ApiResponse<object>(
-                false,
-                "Student could not be created",
-                null
-            ));
+            var response = await _apiService.Create(studentDto);
+            return response.Status == true ? Ok(response) : BadRequest(response);
         }
 
         [HttpPut("{id}")]
