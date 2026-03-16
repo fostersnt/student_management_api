@@ -12,7 +12,7 @@ using student_management_api.Models.Data;
 namespace student_management_api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260316112625_Identity")]
+    [Migration("20260316113025_Identity")]
     partial class Identity
     {
         /// <inheritdoc />
@@ -252,11 +252,11 @@ namespace student_management_api.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FLastName")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

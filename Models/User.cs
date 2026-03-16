@@ -10,7 +10,7 @@ namespace student_management_api.Models
     {
         public override int Id { get; set; }
         public string FirstName { get; set; } = string.Empty;
-        public string FLastName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
         public string MiddleName { get; set; } = string.Empty;
     }
 }
