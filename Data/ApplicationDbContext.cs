@@ -21,8 +21,8 @@ namespace student_management_api.Models.Data
             base.OnModelCreating(builder);
 
             // Rename tables
-            // builder.Entity<User>().ToTable("Users");
-            // builder.Entity<Role>().ToTable("Roles");
+            builder.Entity<User>().ToTable("Users");
+            builder.Entity<Role>().ToTable("Roles");
             builder.Entity<IdentityUserRole<int>>().ToTable("UserRoles");
             builder.Entity<IdentityUserClaim<int>>().ToTable("UserClaims");
             builder.Entity<IdentityUserLogin<int>>().ToTable("UserLogins");
