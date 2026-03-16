@@ -14,6 +14,7 @@ using student_management_api.Repository.IService;
 namespace student_management_api.Migrations.Controllers
 {
     [Route("api/student")]
+    [Authorize]
     [ApiController]
     public class StudentController : ControllerBase
     {
@@ -24,7 +25,6 @@ namespace student_management_api.Migrations.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             var response = await _apiService.Get();
