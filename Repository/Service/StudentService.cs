@@ -24,9 +24,36 @@ namespace student_management_api.Repository.Service
             _logger = logger;
         }
 
-        public Task<ApiResponse<StudentDtoGet>> Create(StudentDtoCreate data)
+        public async Task<ApiResponse<StudentDtoGet>> Create(StudentDtoCreate studentDtoCreate)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _logger.LogInformation("BOOK_CREATION === Incoming Data {@book}", studentDtoCreate);
+                var TransformedBookDto = studentDtoCreate.ToStudentFromCreateDto();
+                await _context.Students.AddAsync(TransformedBookDto);
+                int addedCount = await _context.SaveChangesAsync();
+
+                if (addedCount == 1)
+                {
+                    message = "Book created successfully";
+                }
+                else
+                {
+                    message = "Failed to create new book";
+                }
+
+                status = true;
+                return new ApiResponse<StudentDtoGet>(status, message, TransformedBookDto.ToStudentDto());
+            }
+            catch (Exception ex)
+            {
+                string logMessage = ex.InnerException?.Message ?? ex.Message;
+                _logger.LogInformation("BOOK_CREATION_TRY_CATCH === Message [" + logMessage + "]");
+                status = false;
+                message = "Sorry, failed to create new book";
+                _logger.LogInformation("");
+                return new ApiResponse<StudentDtoGet>(status, message, null);
+            }
         }
 
         public ApiResponse<StudentDtoGet> Delete(int Id)

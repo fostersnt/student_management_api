@@ -23,18 +23,12 @@ namespace student_management_api.Migrations.Controllers
             _apiService = context;
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var students = await _apiService.Get();
-
-            if (students != null)
-            {
-                return Ok(new ApiResponse<IEnumerable<StudentDtoGet>>(true, "Students found", null));
-            }
-
-            return NotFound(new ApiResponse<IEnumerable<StudentDtoGet>>(false, "No student found", null));
+            var response = await _apiService.Get();
+            return response.Status == true ? Ok(response) : BadRequest(response);
         }
 
         [HttpGet("{id}")]
