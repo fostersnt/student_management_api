@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using student_management_api.DTOs.Book;
@@ -10,6 +11,7 @@ using student_management_api.Repository.IService;
 
 namespace student_management_api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/book")]
     public class BookController : ControllerBase
