@@ -58,7 +58,30 @@ namespace student_management_api.Repository.Service
 
         public ApiResponse<UserDtoGet> Delete(int Id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                User? user = _context.Users.Find(Id);
+
+                if (user != null)
+                {
+                    _context.Remove(user);
+                    status = true;
+                    message = "User deleted successfully";
+                }
+                else
+                {
+                    status = false;
+                    message = "User cannot be found";
+                }
+            }
+            catch (Exception ex)
+            {
+                status = false;
+                message = "Failed to delete user";
+                _logger.LogInformation("USER DELETION ==> " + ex.Message);
+            }
+
+            return new ApiResponse<UserDtoGet>(status, message, null);
         }
 
         public async Task<ApiResponse<UserDtoGet>> Get(int Id)
@@ -126,7 +149,7 @@ namespace student_management_api.Repository.Service
 
             try
             {
-               ExistingUser = _context.Users.Find(Id);
+                ExistingUser = _context.Users.Find(Id);
 
                 if (ExistingUser != null)
                 {
@@ -151,7 +174,7 @@ namespace student_management_api.Repository.Service
                 status = false;
                 message = "Failed to update user record";
             }
-            
+
             return new ApiResponse<UserDtoGet>(status, message, ExistingUser?.From_User_To_UserDtoGet());
         }
     }

@@ -47,5 +47,12 @@ namespace student_management_api.Controllers
             var response = await _userService.Update(id, userDtoUpdate);
             return response.Status == true ? Ok(response) : BadRequest(response);
         }
+
+        [HttpDelete("{id:int}")]
+        public IActionResult Delete(int id)
+        {
+            var response = _userService.Delete(id);
+            return response.Status == true ? Ok(response) : BadRequest(response);
+        }
     }
 }
