@@ -20,6 +20,20 @@ namespace student_management_api.Controllers
             _userService = userService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var response = await _userService.Get();
+            return response.Status == true ? Ok(response) : BadRequest(response);
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> Get([FromRoute] int id)
+        {
+            var response = await _userService.Get(id);
+            return response.Status == true ? Ok(response) : BadRequest(response);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] UserDtoCreate userDtoCreate)
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using student_management_api.DTOs.User;
 using student_management_api.Mappers;
 using student_management_api.Models;
@@ -28,15 +29,18 @@ namespace student_management_api.Repository.Service
         public async Task<ApiResponse<UserDtoGet>> Create(UserDtoCreate userDtoCreate)
         {
             var user = userDtoCreate.From_UserDtoCreate_To_User();
+
             user.UserName = user.Email;
 
             var result = await _userManager.CreateAsync(user, userDtoCreate.Password);
 
             if (!result.Succeeded)
             {
+                status = false;
+                message = string.Join(", ", result.Errors.Select(e => e.Description));
                 return new ApiResponse<UserDtoGet>(
                     status,
-                    string.Join(", ", result.Errors.Select(e => e.Description)),
+                    message,
                     null
                 );
             }
@@ -57,14 +61,63 @@ namespace student_management_api.Repository.Service
             throw new NotImplementedException();
         }
 
-        public Task<ApiResponse<UserDtoGet>> Get(int Id)
+        public async Task<ApiResponse<UserDtoGet>> Get(int Id)
         {
-            throw new NotImplementedException();
+            UserDtoGet? FoundUser = null;
+
+            try
+            {
+                var user = await _context.Users.FindAsync(Id);
+
+                if (user != null)
+                {
+                    FoundUser = user.From_User_To_UserDtoGet();
+                    status = true;
+                    message = "User Found";
+                }
+                else
+                {
+                    status = false;
+                    message = "User Not Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation("USER FETCH (SINGLE) => " + ex.Message);
+
+                status = false;
+                message = "An error occurred";
+            }
+
+            return new ApiResponse<UserDtoGet>(status, message, FoundUser);
         }
 
-        public Task<ApiResponse<IEnumerable<UserDtoGet>>> Get()
+        public async Task<ApiResponse<IEnumerable<UserDtoGet>>> Get()
         {
-            throw new NotImplementedException();
+            IEnumerable<UserDtoGet>? formattedUsers = null;
+
+            try
+            {
+                var users = await _context.Users.ToListAsync();
+
+                if (users != null && users.Count > 0)
+                {
+                    formattedUsers = users.Select(user => user.From_User_To_UserDtoGet());
+                    status = true;
+                    message = "Users found";
+                }
+                else
+                {
+                    message = "No User found";
+                }
+            }
+            catch (Exception ex)
+            {
+                status = false;
+                message = ex.Message;
+            }
+
+            return new ApiResponse<IEnumerable<UserDtoGet>>(status, message, formattedUsers);
         }
 
         public Task<ApiResponse<UserDtoGet>> Update(int Id, UserDtoUpdate data)
