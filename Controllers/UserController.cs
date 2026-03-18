@@ -56,9 +56,9 @@ namespace student_management_api.Controllers
         }
 
         [HttpPost("{id:int}")]
-        public IActionResult ChangePassword([FromRoute] int id, [FromBody] UserPasswordChangeDto userPasswordChangeDto)
+        public async Task<IActionResult> ChangePassword([FromRoute] int id, [FromBody] UserPasswordChangeDto userPasswordChangeDto)
         {
-            var response = _userService.ChangePassword(id, userPasswordChangeDto);
+            var response = await _userService.ChangePassword(id, userPasswordChangeDto);
             return response.Status == true ? Ok(response) : BadRequest(response);
         }
     }

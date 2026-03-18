@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using student_management_api.DTOs.Book;
+using student_management_api.DTOs.User;
 using student_management_api.Models;
 using student_management_api.Repository.IService;
 
@@ -16,9 +17,9 @@ namespace student_management_api.Controllers
     [Route("api/book")]
     public class BookController : ControllerBase
     {
-        private readonly IApiService<BookDtoGet, BookDtoCreate, BookDtoUpdate> _apiService;
+        private readonly IApiService<BookDtoGet, BookDtoCreate, BookDtoUpdate, UserPasswordChangeDto> _apiService;
 
-        public BookController(IApiService<BookDtoGet, BookDtoCreate, BookDtoUpdate> apiService)
+        public BookController(IApiService<BookDtoGet, BookDtoCreate, BookDtoUpdate, UserPasswordChangeDto> apiService)
         {
             _apiService = apiService;
         }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using student_management_api.DTOs.Student;
+using student_management_api.DTOs.User;
 using student_management_api.Mappers;
 using student_management_api.Models;
 using student_management_api.Models.Data;
@@ -18,8 +19,8 @@ namespace student_management_api.Migrations.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
-        private readonly IApiService<StudentDtoGet, StudentDtoCreate, StudentDtoUpdate> _apiService;
-        public StudentController(IApiService<StudentDtoGet, StudentDtoCreate, StudentDtoUpdate> context)
+        private readonly IApiService<StudentDtoGet, StudentDtoCreate, StudentDtoUpdate, UserPasswordChangeDto> _apiService;
+        public StudentController(IApiService<StudentDtoGet, StudentDtoCreate, StudentDtoUpdate, UserPasswordChangeDto> context)
         {
             _apiService = context;
         }

@@ -182,28 +182,53 @@ namespace student_management_api.Repository.Service
         }
 
         [HttpPost("{id:int}")]
-        public ApiResponse<UserDtoGet> ChangePassword([FromRoute] int id, UserPasswordChangeDto userPasswordChangeDto)
+        public async Task<ApiResponse<UserDtoGet>> ChangePassword([FromRoute] int id, [FromBody] UserPasswordChangeDto userPasswordChangeDto)
         {
-            User? user = null;
             try
             {
-                user = _context.Users.Find(id);
+                var user = await _userManager.FindByIdAsync(id.ToString());
 
-                if (user != null)
+                if (user == null)
                 {
-                    _userManager.ChangePasswordAsync(user, userPasswordChangeDto.CurrentPassword, userPasswordChangeDto.NewPassword);
-                    status = true;
-                    message = "Password changed successfully";
+                    return new ApiResponse<UserDtoGet>(
+                        false,
+                        "User not found for password change",
+                        null
+                    );
                 }
+
+                var result = await _userManager.ChangePasswordAsync(
+                    user,
+                    userPasswordChangeDto.CurrentPassword,
+                    userPasswordChangeDto.NewPassword
+                );
+
+                if (!result.Succeeded)
+                {
+                    return new ApiResponse<UserDtoGet>(
+                        false,
+                        string.Join(", ", result.Errors.Select(e => e.Description)),
+                        null
+                    );
+                }
+
+                return new ApiResponse<UserDtoGet>(
+                    true,
+                    "Password changed successfully",
+                    user.From_User_To_UserDtoGet()
+                );
             }
             catch (Exception ex)
             {
-                status = false;
-                message = "Unable to change password";
-                _logger.LogInformation("USER PASSWORD CHANGE ==> " + ex.Message);
-            }
+                _logger.LogError("USER PASSWORD CHANGE ==> " + ex.Message);
 
-            return new ApiResponse<UserDtoGet>(status, message, null);
+                return new ApiResponse<UserDtoGet>(
+                    false,
+                    "Unable to change password",
+                    null
+                );
+            }
         }
+
     }
 }

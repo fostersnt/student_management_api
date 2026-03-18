@@ -169,7 +169,7 @@ namespace student_management_api.Repository.Service
             }
         }
 
-        public ApiResponse<BookDtoGet> ChangePassword(int Id, UserPasswordChangeDto extraClass)
+        public async Task<ApiResponse<BookDtoGet>> ChangePassword(int Id, UserPasswordChangeDto extraClass)
         {
             throw new NotImplementedException();
         }
