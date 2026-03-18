@@ -12,8 +12,8 @@ using student_management_api.Models.Data;
 namespace student_management_api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260316113025_Identity")]
-    partial class Identity
+    [Migration("20260318091303_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -277,6 +277,10 @@ namespace student_management_api.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");

@@ -30,7 +30,7 @@ namespace student_management_api.Repository.Service
             var user = userDtoCreate.From_UserDtoCreate_To_User();
             user.UserName = user.Email;
 
-            var result = await _userManager.CreateAsync(user);
+            var result = await _userManager.CreateAsync(user, userDtoCreate.Password);
 
             if (!result.Succeeded)
             {

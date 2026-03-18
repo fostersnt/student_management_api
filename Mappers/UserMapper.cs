@@ -14,7 +14,6 @@ namespace student_management_api.Mappers
             return new User
             {
                 Email = userDtoCreate.Email,
-                Password = userDtoCreate.Password,
             };
         }
 
@@ -35,7 +34,6 @@ namespace student_management_api.Mappers
             return new User
             {
                 Email = userDtoUpdate.Email,
-                Password = userDtoUpdate.Password
             };
         }
     }
