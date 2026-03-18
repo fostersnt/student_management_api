@@ -120,9 +120,39 @@ namespace student_management_api.Repository.Service
             return new ApiResponse<IEnumerable<UserDtoGet>>(status, message, formattedUsers);
         }
 
-        public Task<ApiResponse<UserDtoGet>> Update(int Id, UserDtoUpdate data)
+        public async Task<ApiResponse<UserDtoGet>> Update(int Id, UserDtoUpdate userDtoUpdate)
         {
-            throw new NotImplementedException();
+            User? ExistingUser = null;
+
+            try
+            {
+               ExistingUser = _context.Users.Find(Id);
+
+                if (ExistingUser != null)
+                {
+                    ExistingUser.FirstName = userDtoUpdate.FirstName;
+                    ExistingUser.LastName = userDtoUpdate.LastName;
+                    ExistingUser.MiddleName = userDtoUpdate.MiddleName ?? ExistingUser.MiddleName;
+
+                    var result = _context.SaveChanges();
+
+                    status = true;
+                    message = "User updated successfully";
+                }
+                else
+                {
+                    status = false;
+                    message = "User cannot be found";
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation("USER UPDATE => " + ex.Message);
+                status = false;
+                message = "Failed to update user record";
+            }
+            
+            return new ApiResponse<UserDtoGet>(status, message, ExistingUser?.From_User_To_UserDtoGet());
         }
     }
 }
