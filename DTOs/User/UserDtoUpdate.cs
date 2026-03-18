@@ -10,8 +10,7 @@ namespace student_management_api.DTOs.User
 {
     public class UserDtoUpdate
     {
-        [Required]
-        public string Password { get; set; } = string.Empty;
+        
         [Required]
         public string FirstName { get; set; }
         [Required]
