@@ -40,5 +40,12 @@ namespace student_management_api.Controllers
             var response = await _userService.Create(userDtoCreate);
             return response.Status == true ? Ok(response) : BadRequest(response);
         }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UserDtoUpdate userDtoUpdate)
+        {
+            var response = await _userService.Update(id, userDtoUpdate);
+            return response.Status == true ? Ok(response) : BadRequest(response);
+        }
     }
 }
