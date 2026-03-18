@@ -9,8 +9,8 @@ namespace student_management_api.DTOs.User
     public class UserPasswordChangeDto
     {
         [Required]
-        public string? OldPassword { get; set; }
+        public string CurrentPassword { get; set; } = string.Empty;
         [Required]
-        public string? NewPassword { get; set; }
+        public string NewPassword { get; set; } = string.Empty;
     }
 }

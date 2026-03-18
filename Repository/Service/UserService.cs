@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -181,13 +182,28 @@ namespace student_management_api.Repository.Service
         }
 
         [HttpPost("{id:int}")]
-        public IActionResult ChangePassword([FromRoute] int id)
+        public ApiResponse<UserDtoGet> ChangePassword([FromRoute] int id, UserPasswordChangeDto userPasswordChangeDto)
         {
-            var user = _context.Users.Find(id);
-            if (user != null)
+            User? user = null;
+            try
             {
-                _userManager.ChangePasswordAsync(user, );
+                user = _context.Users.Find(id);
+
+                if (user != null)
+                {
+                    _userManager.ChangePasswordAsync(user, userPasswordChangeDto.CurrentPassword, userPasswordChangeDto.NewPassword);
+                    status = true;
+                    message = "Password changed successfully";
+                }
             }
+            catch (Exception ex)
+            {
+                status = false;
+                message = "Unable to change password";
+                _logger.LogInformation("USER PASSWORD CHANGE ==> " + ex.Message);
+            }
+
+            return new ApiResponse<UserDtoGet>(status, message, null);
         }
     }
 }
