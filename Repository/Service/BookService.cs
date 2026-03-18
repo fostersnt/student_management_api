@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using student_management_api.DTOs.Book;
+using student_management_api.DTOs.User;
 using student_management_api.Mappers;
 using student_management_api.Models;
 using student_management_api.Models.Data;
@@ -13,7 +14,7 @@ using student_management_api.Repository.IService;
 
 namespace student_management_api.Repository.Service
 {
-    public class BookService : IApiService<BookDtoGet, BookDtoCreate, BookDtoUpdate>
+    public class BookService : IApiService<BookDtoGet, BookDtoCreate, BookDtoUpdate, UserPasswordChangeDto>
     {
         public string message { get; set; } = "";
         public bool status { get; set; } = false;
@@ -166,6 +167,11 @@ namespace student_management_api.Repository.Service
                 message = ex.Message.ToString();
                 return new ApiResponse<BookDtoGet>(status, message, null);
             }
+        }
+
+        public ApiResponse<BookDtoGet> ChangePassword(int Id, UserPasswordChangeDto extraClass)
+        {
+            throw new NotImplementedException();
         }
     }
 }

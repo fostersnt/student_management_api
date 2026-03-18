@@ -14,7 +14,7 @@ using student_management_api.Repository.IService;
 
 namespace student_management_api.Repository.Service
 {
-    public class UserService : IApiService<UserDtoGet, UserDtoCreate, UserDtoUpdate>
+    public class UserService : IApiService<UserDtoGet, UserDtoCreate, UserDtoUpdate, UserPasswordChangeDto>
     {
         public string message { get; set; } = "";
         public bool status { get; set; } = false;

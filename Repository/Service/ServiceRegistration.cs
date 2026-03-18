@@ -14,9 +14,9 @@ namespace student_management_api.Repository.Service
         public static IServiceCollection MyPersonalApplicationServices(
         this IServiceCollection services)
         {
-            services.AddScoped<IApiService<StudentDtoGet, StudentDtoCreate, StudentDtoUpdate>, StudentService>();
-            services.AddScoped<IApiService<BookDtoGet, BookDtoCreate, BookDtoUpdate>, BookService>();
-            services.AddScoped<IApiService<UserDtoGet, UserDtoCreate, UserDtoUpdate>, UserService>();
+            services.AddScoped<IApiService<StudentDtoGet, StudentDtoCreate, StudentDtoUpdate, UserPasswordChangeDto>, StudentService>();
+            services.AddScoped<IApiService<BookDtoGet, BookDtoCreate, BookDtoUpdate, UserPasswordChangeDto>, BookService>();
+            services.AddScoped<IApiService<UserDtoGet, UserDtoCreate, UserDtoUpdate, UserPasswordChangeDto>, UserService>();
 
             return services;
         }

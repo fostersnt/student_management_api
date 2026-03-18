@@ -13,9 +13,9 @@ namespace student_management_api.Controllers
     [Route("api/user")]
     public class UserController : ControllerBase
     {
-        private readonly IApiService<UserDtoGet, UserDtoCreate, UserDtoUpdate> _userService;
+        private readonly IApiService<UserDtoGet, UserDtoCreate, UserDtoUpdate, UserPasswordChangeDto> _userService;
 
-        public UserController(IApiService<UserDtoGet, UserDtoCreate, UserDtoUpdate> userService)
+        public UserController(IApiService<UserDtoGet, UserDtoCreate, UserDtoUpdate, UserPasswordChangeDto> userService)
         {
             _userService = userService;
         }
@@ -52,6 +52,13 @@ namespace student_management_api.Controllers
         public IActionResult Delete(int id)
         {
             var response = _userService.Delete(id);
+            return response.Status == true ? Ok(response) : BadRequest(response);
+        }
+
+        [HttpPost("{id:int}")]
+        public IActionResult ChangePassword([FromRoute] int id, [FromBody] UserPasswordChangeDto userPasswordChangeDto)
+        {
+            var response = _userService.ChangePassword(id, userPasswordChangeDto);
             return response.Status == true ? Ok(response) : BadRequest(response);
         }
     }

@@ -6,12 +6,13 @@ using student_management_api.Models;
 
 namespace student_management_api.Repository.IService
 {
-    public interface IApiService<TDtoGet, TDtoCreate, TDtoUpdate>
+    public interface IApiService<TDtoGet, TDtoCreate, TDtoUpdate, TExtraDto>
     {
         public Task<ApiResponse<TDtoGet>> Get(int Id);
         public Task<ApiResponse<IEnumerable<TDtoGet>>> Get();
         public Task<ApiResponse<TDtoGet>> Create(TDtoCreate dtoCreate);
         public Task<ApiResponse<TDtoGet>> Update(int Id, TDtoUpdate dtoUpdate);
         public ApiResponse<TDtoGet> Delete(int Id);
+        public ApiResponse<TDtoGet> ChangePassword(int Id, TExtraDto extraClass);
     }
 }

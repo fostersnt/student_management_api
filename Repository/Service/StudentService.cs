@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using student_management_api.DTOs.Student;
+using student_management_api.DTOs.User;
 using student_management_api.Mappers;
 using student_management_api.Models;
 using student_management_api.Models.Data;
@@ -11,7 +12,7 @@ using student_management_api.Repository.IService;
 
 namespace student_management_api.Repository.Service
 {
-    public class StudentService : IApiService<StudentDtoGet, StudentDtoCreate, StudentDtoUpdate>
+    public class StudentService : IApiService<StudentDtoGet, StudentDtoCreate, StudentDtoUpdate, UserPasswordChangeDto>
     {
         public string message { get; set; } = "";
         public bool status { get; set; } = false;
@@ -85,6 +86,11 @@ namespace student_management_api.Repository.Service
         }
 
         public Task<ApiResponse<StudentDtoGet>> Update(int Id, StudentDtoUpdate data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ApiResponse<StudentDtoGet> ChangePassword(int Id, UserPasswordChangeDto extraClass)
         {
             throw new NotImplementedException();
         }
