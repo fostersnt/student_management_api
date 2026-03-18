@@ -28,6 +28,7 @@ namespace student_management_api.Repository.Service
         public async Task<ApiResponse<UserDtoGet>> Create(UserDtoCreate userDtoCreate)
         {
             var user = userDtoCreate.From_UserDtoCreate_To_User();
+            user.UserName = user.Email;
 
             var result = await _userManager.CreateAsync(user);
 

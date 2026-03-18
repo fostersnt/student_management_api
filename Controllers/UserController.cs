@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using student_management_api.DTOs.User;
+using student_management_api.Repository.IService;
 using student_management_api.Repository.Service;
 
 namespace student_management_api.Controllers
@@ -12,9 +13,9 @@ namespace student_management_api.Controllers
     [Route("api/user")]
     public class UserController : ControllerBase
     {
-        private readonly UserService _userService;
+        private readonly IApiService<UserDtoGet, UserDtoCreate, UserDtoUpdate> _userService;
 
-        public UserController(UserService userService)
+        public UserController(IApiService<UserDtoGet, UserDtoCreate, UserDtoUpdate> userService)
         {
             _userService = userService;
         }
