@@ -33,7 +33,9 @@ namespace student_management_api.Mappers
         {
             return new User
             {
-                Email = userDtoUpdate.Email,
+                FirstName = userDtoUpdate.FirstName,
+                LastName = userDtoUpdate.LastName,
+                MiddleName = userDtoUpdate.MiddleName,
             };
         }
     }
