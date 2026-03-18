@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using student_management_api.DTOs.User;
 using student_management_api.Mappers;
@@ -65,6 +66,7 @@ namespace student_management_api.Repository.Service
                 if (user != null)
                 {
                     _context.Remove(user);
+                    _context.SaveChanges();
                     status = true;
                     message = "User deleted successfully";
                 }
@@ -176,6 +178,16 @@ namespace student_management_api.Repository.Service
             }
 
             return new ApiResponse<UserDtoGet>(status, message, ExistingUser?.From_User_To_UserDtoGet());
+        }
+
+        [HttpPost("{id:int}")]
+        public IActionResult ChangePassword([FromRoute] int id)
+        {
+            var user = _context.Users.Find(id);
+            if (user != null)
+            {
+                _userManager.ChangePasswordAsync(user, );
+            }
         }
     }
 }
