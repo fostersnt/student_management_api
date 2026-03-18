@@ -29,5 +29,14 @@ namespace student_management_api.Mappers
                 LastName = user.LastName,
             };
         }
+
+        public static User From_UserDtoUpdate_To_User(this UserDtoUpdate userDtoUpdate)
+        {
+            return new User
+            {
+                Email = userDtoUpdate.Email,
+                Password = userDtoUpdate.Password
+            };
+        }
     }
 }
