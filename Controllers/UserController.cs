@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using student_management_api.DTOs.User;
 using student_management_api.Repository.IService;
@@ -9,6 +10,7 @@ using student_management_api.Repository.Service;
 
 namespace student_management_api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/user")]
     public class UserController : ControllerBase
